@@ -1,0 +1,51 @@
+<<<<<<< HEAD
+/* Variables de diseño, tomadas del Figma (Desktop - 3). */
+:root {
+  /* Color */
+  --negro: #000000;
+  --blanco: #ffffff;
+  --hero: #161616;
+  --rojo: #e60000;          /* En el Figma es #ff0000; este tono mantiene contraste AA con texto blanco */
+  --rojo-hover: #bf0000;
+  --gris-input: #d9d9d9;
+  --gris-texto: #737070;
+  --gris-linea: #e3e3e3;
+  --gris-fondo: #f5f5f5;
+  --placeholder: #e9e9e9;
+  --verde: #0a7a3d;
+
+  /* Tipografía */
+  --fuente-titulos: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --fuente-ui: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* Espaciado y forma */
+  --ancho: 1163px;
+  --radio: 8px;
+  --sombra-card: 0 0 14.4px rgba(0, 0, 0, 0.12);
+=======
+/* Variables de diseño.
+   Valores PROVISORIOS: se ajustan con los exactos del Figma
+   cuando armemos el header. */
+:root {
+  /* Color */
+  --color-negro: #000000;
+  --color-blanco: #ffffff;
+  --color-rojo: #e60000;
+  --color-gris-fondo: #f4f4f4;
+  --color-gris-texto: #555555;
+
+  /* Tipografía */
+  --fuente-base: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* Espaciado */
+  --espacio-1: 0.5rem;
+  --espacio-2: 1rem;
+  --espacio-3: 1.5rem;
+  --espacio-4: 2.5rem;
+  --espacio-5: 4rem;
+
+  /* Layout (el diseño de Figma tiene 1363 px de ancho, contenido ~1163 px) */
+  --ancho-contenido: 1160px;
+  --radio: 8px;
+>>>>>>> 4b84fa0c2787c0286a2bc477582a1668a4353291
+}

@@ -1,0 +1,84 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+<<<<<<< HEAD
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+=======
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+>>>>>>> 4b84fa0c2787c0286a2bc477582a1668a4353291
+}
+
+body {
+  margin: 0;
+<<<<<<< HEAD
+  font-family: var(--fuente-titulos);
+  color: var(--negro);
+  background: var(--blanco);
+=======
+  font-family: var(--fuente-base);
+  color: var(--color-negro);
+  background: var(--color-blanco);
+>>>>>>> 4b84fa0c2787c0286a2bc477582a1668a4353291
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+<<<<<<< HEAD
+img, svg { max-width: 100%; }
+a { color: inherit; }
+h1, h2, h3, h4 { margin: 0; line-height: 1.15; }
+p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+
+:focus-visible {
+  outline: 3px solid var(--rojo);
+=======
+img, svg { max-width: 100%; display: block; }
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 3px solid var(--color-rojo);
+>>>>>>> 4b84fa0c2787c0286a2bc477582a1668a4353291
+  outline-offset: 2px;
+}
+
+.contenedor {
+<<<<<<< HEAD
+  width: min(100% - 2rem, var(--ancho));
+=======
+  width: min(100% - 2rem, var(--ancho-contenido));
+>>>>>>> 4b84fa0c2787c0286a2bc477582a1668a4353291
+  margin-inline: auto;
+}
+
+.sr-only {
+  position: absolute;
+<<<<<<< HEAD
+  width: 1px; height: 1px;
+=======
+  width: 1px;
+  height: 1px;
+>>>>>>> 4b84fa0c2787c0286a2bc477582a1668a4353291
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+<<<<<<< HEAD
+
+.skip-link {
+  position: absolute;
+  left: 1rem; top: -4rem;
+  background: var(--rojo); color: #fff;
+  padding: .6rem 1rem; border-radius: var(--radio);
+  z-index: 100; text-decoration: none; font-weight: 700;
+}
+.skip-link:focus { top: 1rem; }
+=======
+>>>>>>> 4b84fa0c2787c0286a2bc477582a1668a4353291
