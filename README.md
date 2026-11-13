@@ -8,7 +8,6 @@ Maqueta **no funcional** del nuevo sitio de Uniformes Farfaglia, para mostrar y 
 
 ```
 farfaglia-demo/
-<<<<<<< HEAD
 ├── index.html                Inicio (basado en Figma "Desktop - 3")
 ├── salud-gastronomia.html    Listado
 ├── empresa-seguridad.html    Listado
@@ -43,31 +42,6 @@ Las tipografías (Montserrat e Inter) se cargan desde Google Fonts. Para no depe
 - **Sin nada de eso:** doble clic en `index.html`. Funciona, pero la vista con el servidor local es más fiel a GitHub Pages.
 
 Abajo a la izquierda de cada página se lee **"Maqueta v2"**. Si no lo ves, estás mirando una versión vieja.
-=======
-├── index.html        Inicio
-├── 404.html          Página de error
-├── css/
-│   ├── tokens.css    Colores, tipografía y espaciados
-│   ├── base.css      Reset y estilos generales
-│   └── style.css     Estilos de las secciones
-├── js/
-│   └── main.js       Interacciones simuladas
-├── assets/
-│   ├── img/          Imágenes
-│   └── fonts/        Tipografías
-└── .nojekyll         Evita el procesamiento de Jekyll en GitHub Pages
-```
-
-## Ver en tu computadora
-
-Abrí `index.html` en el navegador. O, para simular mejor la publicación, desde la carpeta:
-
-```bash
-python3 -m http.server 8000
-```
-
-y entrá a http://localhost:8000.
->>>>>>> 4b84fa0c2787c0286a2bc477582a1668a4353291
 
 ## Subir a GitHub y publicar
 
@@ -79,20 +53,12 @@ git init
 git add .
 git commit -m "Estructura inicial de la maqueta"
 git branch -M main
-<<<<<<< HEAD
 git remote add origin https://github.com/DaniiAlve/farfaglia-demo.git
-=======
-git remote add origin https://github.com/TU_USUARIO/farfaglia-demo.git
->>>>>>> 4b84fa0c2787c0286a2bc477582a1668a4353291
 git push -u origin main
 ```
 
 3. En GitHub: **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `main` / `(root)` → Save**.
-<<<<<<< HEAD
 4. Tras uno o dos minutos, el sitio queda en `https://daniialve.github.io/farfaglia-demo/`.
-=======
-4. Tras uno o dos minutos, el sitio queda en `https://TU_USUARIO.github.io/farfaglia-demo/`.
->>>>>>> 4b84fa0c2787c0286a2bc477582a1668a4353291
 
 ## Reglas del proyecto
 
