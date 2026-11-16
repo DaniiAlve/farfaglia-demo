@@ -41,14 +41,8 @@
 }
 .buscador button:hover { background: var(--rojo-hover); }
 
-.logo {
-  display: flex; flex-direction: column; align-items: center;
-  text-decoration: none; text-transform: uppercase;
-  font-weight: 900; line-height: .88; letter-spacing: -.01em;
-  font-size: clamp(1.7rem, 3.4vw, 2.7rem);
-}
-.logo span:first-child { color: var(--rojo); }
-.logo span:last-child { color: #fff; }
+.logo { display: block; text-decoration: none; }
+.logo img { display: block; width: clamp(220px, 28vw, 340px); height: auto; }
 
 .header-acciones { display: flex; justify-content: flex-end; align-items: center; gap: 1.1rem; }
 .icono-btn {
@@ -65,16 +59,16 @@
 }
 .menu-toggle { display: none; }
 
-.nav-principal { padding-bottom: .4rem; }
+.nav-principal { padding-bottom: .9rem; }
 .nav-principal ul {
-  display: flex; flex-wrap: wrap; justify-content: center;
-  gap: .2rem clamp(1.1rem, 2.6vw, 2.4rem);
+  display: flex; flex-wrap: nowrap; justify-content: center;
+  gap: .2rem clamp(.9rem, 2vw, 2rem);
   width: min(100% - 2rem, var(--ancho)); margin-inline: auto;
 }
 .nav-principal a {
   display: block; padding: .8rem 0 .65rem;
   color: #fff; text-decoration: none; font-weight: 600;
-  font-size: clamp(.95rem, 1.5vw, 1.25rem);
+  font-size: clamp(.8rem, 1.2vw, 1.05rem); white-space: nowrap;
   border-bottom: 3px solid transparent;
 }
 .nav-principal a:hover { color: var(--rojo); }
