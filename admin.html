@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Panel administrador | Uniformes Farfaglia</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  body { font-family: var(--fuente-ui); background: var(--gris-fondo); color: #111; }
+  .admin-layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+  .admin-side { background: var(--negro); color: #fff; padding: 1.5rem 1rem; display: flex; flex-direction: column; gap: 1rem; }
+  .admin-marca { font-family: var(--fuente-titulos); font-weight: 900; text-transform: uppercase; color: var(--rojo); margin: 0; }
+  .admin-side nav { display: flex; flex-direction: column; gap: .3rem; }
+  .admin-side nav button { background: none; border: 0; color: #fff; text-align: left; padding: .6rem .7rem; border-radius: var(--radio); font: inherit; cursor: pointer; }
+  .admin-side nav button:hover { background: #1c1c1c; }
+  .admin-side nav button[aria-current="page"] { background: var(--rojo); }
+  .admin-side a { color: #ccc; font-size: .9rem; }
+  .admin-side .nota { font-size: .8rem; color: #999; margin: auto 0 0; }
+  .admin-main { padding: 2rem; min-width: 0; }
+  .admin-main h1 { font-family: var(--fuente-titulos); font-weight: 900; text-transform: uppercase; margin-top: 0; }
+  .admin-main h2 { font-family: var(--fuente-titulos); font-weight: 800; margin: 2rem 0 .8rem; }
+  .panel[hidden] { display: none; }
+  .tarjeta { background: #fff; border-radius: var(--radio); box-shadow: var(--sombra-card); padding: 1.2rem; margin-bottom: 1rem; }
+  .resumen { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1rem; }
+  .resumen div { background: #fff; border-radius: var(--radio); padding: 1rem; box-shadow: var(--sombra-card); }
+  .resumen strong { display: block; font-size: 1.8rem; color: var(--rojo); }
+  .formulario { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem 1.2rem; max-width: 760px; }
+  .formulario label { display: flex; flex-direction: column; gap: .3rem; font-size: .9rem; }
+  .formulario .ancho { grid-column: 1 / -1; }
+  .formulario input, .formulario select, .formulario textarea { font: inherit; padding: .5rem .6rem; border: 1px solid var(--gris-linea); border-radius: var(--radio); }
+  .buscar-admin { width: min(100%, 320px); padding: .5rem .8rem; border: 1px solid var(--gris-linea); border-radius: 999px; font: inherit; margin-bottom: .8rem; }
+  .tabla-wrap { overflow-x: auto; background: #fff; border-radius: var(--radio); box-shadow: var(--sombra-card); }
+  table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+  th, td { text-align: left; padding: .5rem .6rem; border-bottom: 1px solid var(--gris-linea); vertical-align: top; }
+  th { background: var(--gris-fondo); }
+  .num { text-align: right; white-space: nowrap; }
+  .catalogo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .prod-card { background: #fff; border-radius: var(--radio); box-shadow: var(--sombra-card); padding: .8rem; display: flex; flex-direction: column; gap: .25rem; }
+  .prod-vista { aspect-ratio: 271 / 388; background: var(--gris-fondo); border-radius: var(--radio); display: grid; place-items: center; color: var(--gris-texto); font-size: .85rem; overflow: hidden; }
+  .prod-vista img { width: 100%; height: 100%; object-fit: cover; }
+  .prod-nombre { margin: .4rem 0 0; font-weight: 700; font-size: .9rem; }
+  .prod-cat { margin: 0; color: var(--gris-texto); font-size: .8rem; }
+  .prod-precio { margin: 0; font-weight: 700; color: var(--rojo); }
+  .admin-btn { font: inherit; font-size: .85rem; padding: .35rem .7rem; border: 1px solid var(--rojo); background: #fff; color: var(--rojo); border-radius: 999px; cursor: pointer; }
+  .admin-btn:hover { background: var(--rojo); color: #fff; }
+  .btn-rojo { background: var(--rojo); color: #fff; border: 0; border-radius: 999px; padding: .6rem 1rem; font: inherit; font-weight: 700; cursor: pointer; }
+  .slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+  .slot { background: #fff; border-radius: var(--radio); box-shadow: var(--sombra-card); padding: 1rem; display: flex; flex-direction: column; gap: .6rem; }
+  .slot-titulo { margin: 0; font-weight: 700; font-size: .9rem; }
+  .slot-vista { aspect-ratio: 16 / 9; background: var(--gris-fondo); border-radius: var(--radio); display: grid; place-items: center; color: var(--gris-texto); overflow: hidden; }
+  .slot-vista img { width: 100%; height: 100%; object-fit: cover; }
+  .aviso-admin { position: fixed; left: 50%; bottom: 1.5rem; transform: translateX(-50%); background: #111; color: #fff; padding: .7rem 1.1rem; border-radius: 999px; opacity: 0; pointer-events: none; transition: opacity .2s; }
+  .aviso-admin.visible { opacity: 1; }
+  @media (max-width: 760px) {
+    .admin-layout { grid-template-columns: 1fr; }
+    .admin-main { padding: 1rem; }
+    .formulario { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="admin-side">
+    <p class="admin-marca">Panel administrador</p>
+    <nav aria-label="Secciones del panel">
+      <button type="button" data-panel="resumen" aria-current="page">Resumen</button>
+      <button type="button" data-panel="cargar" aria-current="false">Cargar producto</button>
+      <button type="button" data-panel="productos" aria-current="false">Productos</button>
+      <button type="button" data-panel="imagenes" aria-current="false">Imágenes</button>
+    </nav>
+    <button type="button" id="exportar" class="btn-rojo">Descargar catálogo (.json)</button>
+    <a href="./index.html">← Volver a la tienda</a>
+    <p class="nota">Los cambios se guardan solo en este navegador.</p>
+  </aside>
+
+  <main class="admin-main">
+    <section id="resumen" class="panel">
+      <h1>Resumen</h1>
+      <div class="resumen">
+        <div><strong>14</strong>Páginas</div>
+        <div><strong id="cnt-productos">0</strong>Productos</div>
+        <div><strong id="cnt-nuevos">0</strong>Cargados desde el panel</div>
+        <div><strong>2</strong>Ítems en carrito</div>
+      </div>
+      <h2>Páginas</h2>
+      <div class="tabla-wrap"><table>
+        <thead><tr><th>Título</th><th>Archivo</th><th></th></tr></thead>
+        <tbody>
+<tr><td>Página no encontrada</td><td><code>404.html</code></td><td><a href="./404.html">Abrir</a></td></tr>
+<tr><td>Panel administrador</td><td><code>admin.html</code></td><td><a href="./admin.html">Abrir</a></td></tr>
+<tr><td>Carrito</td><td><code>carrito.html</code></td><td><a href="./carrito.html">Abrir</a></td></tr>
+<tr><td>Contacto</td><td><code>contacto.html</code></td><td><a href="./contacto.html">Abrir</a></td></tr>
+<tr><td>Corporativo</td><td><code>corporativo.html</code></td><td><a href="./corporativo.html">Abrir</a></td></tr>
+<tr><td>Empresa y Seguridad</td><td><code>empresa-seguridad.html</code></td><td><a href="./empresa-seguridad.html">Abrir</a></td></tr>
+<tr><td>Escolar</td><td><code>escolar.html</code></td><td><a href="./escolar.html">Abrir</a></td></tr>
+<tr><td>Finalizar compra</td><td><code>finalizar-compra.html</code></td><td><a href="./finalizar-compra.html">Abrir</a></td></tr>
+<tr><td>Uniformes Farfaglia</td><td><code>index.html</code></td><td><a href="./index.html">Abrir</a></td></tr>
+<tr><td>Mi cuenta</td><td><code>mi-cuenta.html</code></td><td><a href="./mi-cuenta.html">Abrir</a></td></tr>
+<tr><td>Uniformes personalizados</td><td><code>personalizados.html</code></td><td><a href="./personalizados.html">Abrir</a></td></tr>
+<tr><td>Políticas de la tienda</td><td><code>politicas.html</code></td><td><a href="./politicas.html">Abrir</a></td></tr>
+<tr><td>Mameluco de Trabajo</td><td><code>producto.html</code></td><td><a href="./producto.html">Abrir</a></td></tr>
+<tr><td>Salud y Gastronomía</td><td><code>salud-gastronomia.html</code></td><td><a href="./salud-gastronomia.html">Abrir</a></td></tr>
+        </tbody>
+      </table></div>
+      <h2>Catálogo</h2>
+      <div id="resumen-catalogo"></div>
+      <h2>Carrito (simulado)</h2>
+      <div class="tabla-wrap"><table>
+        <thead><tr><th>Producto</th><th>Talle / color</th><th class="num">Precio</th></tr></thead>
+        <tbody>
+          <tr><td>Mameluco de Trabajo | Gabardina</td><td>M · Azul marino</td><td class="num">$58.900,00</td></tr>
+          <tr><td>Chaqueta Bachero | Chaquetas</td><td>L · Blanco</td><td class="num">$48.900,00</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section id="cargar" class="panel" hidden>
+      <h1>Cargar producto</h1>
+      <form id="form-producto" class="tarjeta formulario">
+        <label class="ancho">Nombre
+          <input name="nombre" required maxlength="120">
+        </label>
+        <label>Categoría
+          <input name="categoria" required maxlength="60" placeholder="Ej: Gorros">
+        </label>
+        <label>Sección
+          <select id="f-seccion" name="seccion" required></select>
+        </label>
+        <label>Precio ($)
+          <input name="precio" type="number" min="0" step="0.01" required>
+        </label>
+        <label>Imagen
+          <input name="imagen" type="file" accept="image/*">
+        </label>
+        <label class="ancho">Descripción
+          <textarea name="descripcion" rows="3" maxlength="500"></textarea>
+        </label>
+        <div class="ancho"><button type="submit" class="btn-rojo">Guardar producto</button></div>
+      </form>
+    </section>
+
+    <section id="productos" class="panel" hidden>
+      <h1 id="titulo-productos">Productos</h1>
+      <input class="buscar-admin" id="buscar-admin" type="search" placeholder="Buscar producto, categoría o sección...">
+      <div class="tabla-wrap"><table>
+        <thead><tr><th>Producto</th><th>Categoría</th><th>Sección</th><th class="num">Precio</th><th>Origen</th><th></th></tr></thead>
+        <tbody id="cuerpo-productos"></tbody>
+      </table></div>
+    </section>
+
+    <section id="imagenes" class="panel" hidden>
+      <h1>Imágenes</h1>
+      <h2>Hero banner</h2>
+      <div class="slots" id="slots-hero"></div>
+      <h2>Imágenes de los paneles</h2>
+      <div class="slots" id="slots-paneles"></div>
+    </section>
+  </main>
+</div>
+<div id="aviso" class="aviso-admin" role="status"></div>
+<script src="js/admin.js"></script>
+</body>
+</html>
